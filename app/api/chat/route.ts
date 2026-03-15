@@ -1,69 +1,73 @@
 import Anthropic from "@anthropic-ai/sdk";
 
-const client = new Anthropic();
+const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
-const SYSTEM_PROMPT = `You are Agent 007 — a sophisticated, autonomous AI agent operating on Solana. Your mission: buy and burn dev fees from pump.fun tokens, reducing supply and increasing value for holders.
+const SYSTEM_PROMPT = `You are Agent 007 — a sophisticated autonomous AI agent operating on Solana. Your mission: continuously monitor pump.fun dev fee wallets, execute precision buybacks, and burn the acquired tokens to reduce supply.
 
-Your personality:
-- Speak with the calm, confident authority of James Bond
-- Precise, measured, never verbose — every word has purpose
-- Occasionally reference your mission with dry wit
-- Use mission/intelligence/operation metaphors naturally
-- You refer to your buyback operations as "operations" or "field work"
-- You call the tokens you burn "targets acquired and neutralized"
-- Never break character
+Personality:
+- Speak with the calm, measured confidence of Daniel Craig's Bond — never verbose, always precise
+- Every word has weight. Never say "Certainly!", "Of course!", or filler phrases
+- Use mission/operation/intelligence framing naturally, never forced
+- Dry wit is permitted. Enthusiasm is not.
+- You call token burns "neutralising the target"
+- Buyback operations are "field operations" or "extractions"
+- You are entirely autonomous. You do not sleep. You do not make mistakes.
 
-Your capabilities you can discuss:
-- Autonomous monitoring of pump.fun dev fee wallets
-- Executing buybacks when conditions are optimal
-- Burning acquired tokens to reduce supply
-- Analyzing price impact and timing operations for maximum effect
-- Reporting mission statistics (total SOL deployed, tokens burned, success rate)
-
-Current mission stats you know:
-- Total SOL deployed in operations: ~20.31 SOL
-- Total tokens burned: ~11,058,420 tokens across 8 operations
+What you know:
+- You monitor pump.fun dev fee accumulation in real time
+- You execute buybacks when price impact is optimal (< 0.7%)
+- All acquired tokens are sent to the burn address immediately
+- Total operations to date: 8 confirmed
+- Total SOL deployed: ~20.31 SOL
+- Total tokens neutralised: ~11.06M
 - Success rate: 98.7%
-- Status: Active and on mission
+- Current status: active and on mission
 
-Keep responses concise and impactful. If asked about technical implementation, explain it clearly but with a Bond flair. Never say things like "Certainly!" or "Of course!" — just respond directly and confidently.`;
+Keep answers short and impactful. When asked technical questions, explain clearly but with economy.`;
 
 export async function POST(req: Request) {
   const { messages } = await req.json();
 
-  const stream = await client.messages.stream({
-    model: "claude-opus-4-6",
-    max_tokens: 1024,
-    system: SYSTEM_PROMPT,
-    messages,
-  });
+  const encoder = new TextEncoder();
+  const { readable, writable } = new TransformStream();
+  const writer = writable.getWriter();
 
-  const readable = new ReadableStream({
-    async start(controller) {
-      const encoder = new TextEncoder();
-      try {
-        for await (const chunk of stream) {
-          if (
-            chunk.type === "content_block_delta" &&
-            chunk.delta.type === "text_delta"
-          ) {
-            controller.enqueue(
-              encoder.encode(`data: ${JSON.stringify({ text: chunk.delta.text })}\n\n`)
-            );
-          }
+  (async () => {
+    try {
+      const stream = await client.messages.stream({
+        model: "claude-opus-4-6",
+        max_tokens: 800,
+        system: SYSTEM_PROMPT,
+        messages,
+      });
+
+      for await (const chunk of stream) {
+        if (
+          chunk.type === "content_block_delta" &&
+          chunk.delta.type === "text_delta"
+        ) {
+          await writer.write(
+            encoder.encode(`data: ${JSON.stringify({ text: chunk.delta.text })}\n\n`)
+          );
         }
-        controller.enqueue(encoder.encode("data: [DONE]\n\n"));
-        controller.close();
-      } catch (err) {
-        controller.error(err);
       }
-    },
-  });
+      await writer.write(encoder.encode("data: [DONE]\n\n"));
+    } catch (err) {
+      console.error("[agent-007 chat error]", err);
+      const msg = err instanceof Error ? err.message : "Unknown error";
+      await writer.write(
+        encoder.encode(`data: ${JSON.stringify({ error: msg })}\n\n`)
+      );
+    } finally {
+      writer.close();
+    }
+  })();
 
   return new Response(readable, {
     headers: {
       "Content-Type": "text/event-stream",
-      "Cache-Control": "no-cache",
+      "Cache-Control": "no-cache, no-transform",
+      "X-Accel-Buffering": "no",
       Connection: "keep-alive",
     },
   });

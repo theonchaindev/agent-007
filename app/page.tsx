@@ -4,156 +4,140 @@ import BuybackRow from "@/components/BuybackRow";
 import { mockBuybacks, agentStats } from "@/lib/data";
 
 export default function HomePage() {
-  const recentBuybacks = mockBuybacks.slice(0, 5);
-
   return (
     <div className="min-h-screen">
-      {/* Hero */}
-      <section className="relative overflow-hidden border-b border-obsidian-border">
-        {/* Background grid */}
-        <div className="absolute inset-0 opacity-[0.03]"
+
+      {/* ── Hero ── */}
+      <section className="relative border-b border-agent-border overflow-hidden">
+
+        {/* Dot grid bg */}
+        <div
+          className="absolute inset-0 opacity-[0.06]"
           style={{
-            backgroundImage: `
-              linear-gradient(rgba(212,175,55,1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(212,175,55,1) 1px, transparent 1px)
-            `,
-            backgroundSize: "60px 60px",
+            backgroundImage: "radial-gradient(circle, #ffffff 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
           }}
         />
 
-        <div className="relative max-w-6xl mx-auto px-6 py-28 flex flex-col items-center text-center">
-          {/* Target reticle */}
-          <div className="relative w-32 h-32 mb-10">
-            <div className="absolute inset-0 rounded-full border border-gold/20 reticle" />
-            <div className="absolute inset-4 rounded-full border border-gold/30 reticle" style={{ animationDirection: "reverse", animationDuration: "5s" }} />
-            <div className="absolute inset-8 rounded-full border border-gold/40" />
-            {/* Cross hairs */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-full h-px bg-gold/20" />
-            </div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-px h-full bg-gold/20" />
-            </div>
-            {/* Center dot */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-4 h-4 rounded-full bg-gold/90 shadow-[0_0_20px_rgba(212,175,55,0.6)]" />
-            </div>
+        {/* Vignette */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/0 via-black/0 to-black" />
+
+        <div className="relative max-w-5xl mx-auto px-6 pt-24 pb-28 flex flex-col items-center text-center">
+
+          {/* Classification stamp */}
+          <div className="mb-10 border border-agent-red/60 px-4 py-1">
+            <span className="font-mono text-[10px] text-agent-red tracking-[0.4em] font-bold">TOP SECRET · CLASSIFIED</span>
           </div>
 
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 border border-gold/30 rounded-full px-4 py-1.5 mb-8 bg-gold/5">
-            <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-            <span className="text-gold text-xs tracking-widest font-mono uppercase">Autonomous · Active · On Mission</span>
+          {/* Reticle + wordmark */}
+          <div className="relative w-36 h-36 mb-12">
+            {/* Outer ring */}
+            <div className="absolute inset-0 rounded-full border border-white/10 reticle" />
+            {/* Tick marks at 12/3/6/9 */}
+            <div className="absolute inset-0 rounded-full border border-white/5 reticle-rev" />
+            {/* Mid ring */}
+            <div className="absolute inset-5 rounded-full border border-white/15" />
+            {/* Inner ring */}
+            <div className="absolute inset-10 rounded-full border border-white/25" />
+            {/* Cross hairs */}
+            <div className="absolute top-1/2 left-0 right-0 h-px bg-white/10" />
+            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-white/10" />
+            {/* Corner brackets */}
+            <div className="absolute top-3 left-3 w-3 h-3 border-t border-l border-white/30" />
+            <div className="absolute top-3 right-3 w-3 h-3 border-t border-r border-white/30" />
+            <div className="absolute bottom-3 left-3 w-3 h-3 border-b border-l border-white/30" />
+            <div className="absolute bottom-3 right-3 w-3 h-3 border-b border-r border-white/30" />
+            {/* Center */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-3 h-3 rounded-full bg-white shadow-[0_0_12px_rgba(255,255,255,0.5)]" />
+            </div>
           </div>
 
           {/* Title */}
-          <h1 className="text-6xl md:text-8xl font-black tracking-tight mb-4">
-            <span className="text-white">AGENT</span>{" "}
-            <span className="text-gold" style={{ textShadow: "0 0 40px rgba(212,175,55,0.3)" }}>
+          <h1 className="text-7xl md:text-9xl font-black tracking-tight leading-none mb-3">
+            <span className="text-white">AGENT</span>
+            <br />
+            <span className="text-white" style={{ WebkitTextStroke: "1px rgba(255,255,255,0.3)", color: "transparent" }}>
               007
             </span>
           </h1>
 
-          <p className="text-white/40 text-sm tracking-[0.3em] uppercase mb-2 font-mono">
-            Licensed to Accumulate
+          <p className="font-mono text-[11px] text-agent-dim tracking-[0.35em] mt-4 mb-2">
+            LICENSED TO ACCUMULATE
+          </p>
+          <p className="text-agent-mid text-base max-w-md mt-5 leading-relaxed">
+            Autonomous AI agent. Continuously buys and burns dev fees from pump.fun —
+            reducing supply, serving holders.
           </p>
 
-          <p className="text-white/60 max-w-xl mt-6 text-lg leading-relaxed">
-            An autonomous AI agent that continuously buys and burns dev fees from pump.fun —
-            reducing supply, increasing value.
-          </p>
-
-          {/* CTA */}
-          <div className="flex gap-4 mt-10">
+          {/* CTAs */}
+          <div className="flex gap-3 mt-10">
             <Link
               href="/chat"
-              className="inline-flex items-center gap-2 bg-gold text-obsidian font-bold text-sm tracking-widest px-8 py-3.5 hover:bg-gold-light transition-colors"
+              className="flex items-center gap-2 bg-white text-black font-bold text-xs tracking-[0.2em] px-7 py-3.5 hover:bg-white/90 transition-colors"
             >
-              <span>BRIEF THE AGENT</span>
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              BRIEF THE AGENT
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </Link>
             <Link
               href="/buybacks"
-              className="inline-flex items-center gap-2 border border-white/20 text-white font-medium text-sm tracking-widest px-8 py-3.5 hover:border-gold/40 hover:text-gold transition-colors"
+              className="flex items-center gap-2 border border-agent-border text-agent-mid font-medium text-xs tracking-[0.2em] px-7 py-3.5 hover:border-white/30 hover:text-white transition-colors"
             >
-              VIEW OPERATIONS
+              VIEW OPS
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="max-w-6xl mx-auto px-6 py-14">
-        <div className="flex items-center gap-3 mb-8">
-          <div className="w-4 h-px bg-gold" />
-          <span className="text-xs text-white/30 tracking-widest font-mono uppercase">Mission Statistics</span>
+      {/* ── Stats ── */}
+      <section className="max-w-5xl mx-auto px-6 py-12">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="font-mono text-[10px] text-agent-dim tracking-[0.3em]">// MISSION STATS</span>
+          <div className="flex-1 h-px bg-agent-border" />
         </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <StatCard
-            label="Total SOL Deployed"
-            value={`${agentStats.totalSolSpent.toFixed(2)}`}
-            sub="SOL in buybacks"
-            accent
-          />
-          <StatCard
-            label="Tokens Burned"
-            value={`${(agentStats.totalTokensBurned / 1_000_000).toFixed(2)}M`}
-            sub="total supply removed"
-          />
-          <StatCard
-            label="Operations"
-            value={String(agentStats.totalBuybacks)}
-            sub="successful buybacks"
-          />
-          <StatCard
-            label="Success Rate"
-            value={`${agentStats.successRate}%`}
-            sub="mission accuracy"
-          />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-agent-border">
+          <StatCard label="SOL Deployed" value={`${agentStats.totalSolSpent.toFixed(2)}`} sub="total SOL" highlight />
+          <StatCard label="Tokens Burned" value={`${(agentStats.totalTokensBurned / 1_000_000).toFixed(2)}M`} sub="supply removed" />
+          <StatCard label="Operations" value={String(agentStats.totalBuybacks)} sub="completed" />
+          <StatCard label="Success Rate" value={`${agentStats.successRate}%`} sub="accuracy" />
         </div>
       </section>
 
-      {/* Recent Activity */}
-      <section className="max-w-6xl mx-auto px-6 pb-20">
+      {/* ── Recent ops ── */}
+      <section className="max-w-5xl mx-auto px-6 pb-20">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-            <div className="w-4 h-px bg-gold" />
-            <span className="text-xs text-white/30 tracking-widest font-mono uppercase">Recent Operations</span>
+            <span className="font-mono text-[10px] text-agent-dim tracking-[0.3em]">// RECENT OPERATIONS</span>
+            <div className="flex-1 h-px bg-agent-border w-8" />
           </div>
-          <Link href="/buybacks" className="text-xs text-gold/60 hover:text-gold font-mono tracking-wider transition-colors">
-            VIEW ALL →
+          <Link href="/buybacks" className="font-mono text-[10px] text-agent-dim hover:text-white tracking-widest transition-colors">
+            ALL →
           </Link>
         </div>
 
-        <div className="border border-obsidian-border rounded-sm overflow-hidden">
-          {/* Table header */}
-          <div className="grid grid-cols-[32px_1fr_1fr_1fr_1fr_80px] gap-4 px-6 py-3 bg-obsidian-card border-b border-obsidian-border">
-            {["#", "TOKEN", "SOL SPENT", "BURNED", "TX", "TIME"].map((h) => (
-              <span key={h} className="text-[10px] text-white/20 tracking-widest font-mono">{h}</span>
+        <div className="border border-agent-border">
+          {/* Col headers */}
+          <div className="grid grid-cols-[28px_1fr_1fr_1fr_1fr_72px] gap-4 px-5 py-2.5 bg-agent-card border-b border-agent-border">
+            {["#", "TOKEN", "SOL", "BURNED", "TX", "TIME"].map((h) => (
+              <span key={h} className="font-mono text-[9px] text-agent-dim tracking-[0.2em]">{h}</span>
             ))}
           </div>
-
-          {recentBuybacks.map((buyback, i) => (
-            <BuybackRow key={buyback.id} buyback={buyback} index={i} />
+          {mockBuybacks.slice(0, 5).map((b, i) => (
+            <BuybackRow key={b.id} buyback={b} index={i} />
           ))}
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-obsidian-border">
-        <div className="max-w-6xl mx-auto px-6 py-8 flex items-center justify-between">
-          <div className="flex items-baseline gap-1">
-            <span className="text-white/20 text-xs font-mono">AGENT</span>
-            <span className="text-gold/40 text-xs font-mono font-bold">007</span>
-          </div>
-          <p className="text-white/15 text-xs font-mono tracking-wider">
-            CLASSIFIED · AUTONOMOUS · UNSTOPPABLE
-          </p>
+      {/* ── Footer ── */}
+      <footer className="border-t border-agent-border">
+        <div className="max-w-5xl mx-auto px-6 py-6 flex items-center justify-between">
+          <span className="font-mono text-[10px] text-agent-dim tracking-[0.2em]">AGENT 007</span>
+          <span className="font-mono text-[10px] text-agent-dim/50 tracking-widest">CLASSIFIED · AUTONOMOUS · SOLANA</span>
         </div>
       </footer>
+
     </div>
   );
 }

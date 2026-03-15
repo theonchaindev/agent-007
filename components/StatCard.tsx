@@ -2,17 +2,17 @@ interface StatCardProps {
   label: string;
   value: string;
   sub?: string;
-  accent?: boolean;
+  highlight?: boolean;
 }
 
-export default function StatCard({ label, value, sub, accent }: StatCardProps) {
+export default function StatCard({ label, value, sub, highlight }: StatCardProps) {
   return (
-    <div className={`border rounded-sm p-6 ${accent ? "border-gold/40 bg-gold/5" : "border-obsidian-border bg-obsidian-card"}`}>
-      <p className="text-xs text-white/30 tracking-widest uppercase mb-3 font-mono">{label}</p>
-      <p className={`text-2xl font-bold font-mono ${accent ? "text-gold" : "text-white"}`}>
+    <div className={`border p-5 ${highlight ? "border-white/20 bg-white/[0.03]" : "border-agent-border bg-agent-card"}`}>
+      <p className="font-mono text-[10px] text-agent-dim tracking-[0.25em] uppercase mb-3">{label}</p>
+      <p className={`font-mono text-2xl font-bold ${highlight ? "text-white" : "text-agent-light"}`}>
         {value}
       </p>
-      {sub && <p className="text-xs text-white/30 mt-1 font-mono">{sub}</p>}
+      {sub && <p className="font-mono text-[11px] text-agent-dim mt-1">{sub}</p>}
     </div>
   );
 }
