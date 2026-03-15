@@ -45,7 +45,7 @@ export default function HomePage() {
             <div className="mb-2">
               <p
                 className="font-goldeneye leading-none text-m-green"
-                style={{ fontSize: "clamp(3.5rem, 8vw, 7rem)", letterSpacing: "0.1em", marginBottom: "-0.05em" }}
+                style={{ fontSize: "clamp(3.5rem, 8vw, 7rem)", letterSpacing: "0.1em", marginBottom: "-0.25em" }}
               >
                 AGENT
               </p>
