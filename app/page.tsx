@@ -43,7 +43,12 @@ export default function HomePage() {
 
             {/* Main title */}
             <div className="mb-2">
-              <p className="font-goldeneye text-m-mid text-2xl tracking-[0.5em] mb-1">AGENT</p>
+              <p
+                className="font-goldeneye leading-none text-m-green"
+                style={{ fontSize: "clamp(3.5rem, 8vw, 7rem)", letterSpacing: "0.1em", marginBottom: "-0.05em" }}
+              >
+                AGENT
+              </p>
               <h1
                 className="font-goldeneye leading-none text-m-green"
                 style={{
