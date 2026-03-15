@@ -11,7 +11,7 @@ export default function BuybacksPage() {
         <div className="border border-m-red/50 inline-block px-3 py-0.5 mb-6">
           <span className="font-mono text-[10px] text-m-red tracking-[0.35em] font-bold">CLASSIFIED · EYES ONLY</span>
         </div>
-        <h1 className="font-bebas leading-none" style={{ fontSize: "clamp(3.5rem, 8vw, 6rem)" }}>
+        <h1 className="font-goldeneye leading-none" style={{ fontSize: "clamp(3.5rem, 8vw, 6rem)" }}>
           <span className="text-m-green" style={{ textShadow: "0 0 20px rgba(0,255,65,0.3)" }}>OPERATIONS</span>
           <br />
           <span className="text-transparent" style={{ WebkitTextStroke: "1px #00FF41" }}>LOG</span>

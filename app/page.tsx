@@ -43,9 +43,9 @@ export default function HomePage() {
 
             {/* Main title */}
             <div className="mb-2">
-              <p className="font-bebas text-m-mid text-2xl tracking-[0.5em] mb-1">AGENT</p>
+              <p className="font-goldeneye text-m-mid text-2xl tracking-[0.5em] mb-1">AGENT</p>
               <h1
-                className="font-bebas leading-none text-m-green"
+                className="font-goldeneye leading-none text-m-green"
                 style={{
                   fontSize: "clamp(7rem, 16vw, 14rem)",
                   textShadow: "0 0 60px rgba(0,255,65,0.35), 0 0 120px rgba(0,255,65,0.15)",
@@ -73,19 +73,19 @@ export default function HomePage() {
             {/* Stats — live zeros until wallet connected */}
             <div className="flex gap-8 mb-10">
               <div>
-                <p className="font-bebas text-m-green text-3xl" style={{ textShadow: "0 0 20px rgba(0,255,65,0.4)" }}>
+                <p className="font-goldeneye text-m-green text-3xl" style={{ textShadow: "0 0 20px rgba(0,255,65,0.4)" }}>
                   {agentStats.totalSolSpent.toFixed(2)}
                 </p>
                 <p className="font-mono text-[9px] text-m-dim tracking-widest mt-0.5">SOL DEPLOYED</p>
               </div>
               <div>
-                <p className="font-bebas text-m-green text-3xl" style={{ textShadow: "0 0 20px rgba(0,255,65,0.4)" }}>
+                <p className="font-goldeneye text-m-green text-3xl" style={{ textShadow: "0 0 20px rgba(0,255,65,0.4)" }}>
                   {agentStats.totalTokensBurned.toLocaleString()}
                 </p>
                 <p className="font-mono text-[9px] text-m-dim tracking-widest mt-0.5">TOKENS BURNED</p>
               </div>
               <div>
-                <p className="font-bebas text-m-green text-3xl" style={{ textShadow: "0 0 20px rgba(0,255,65,0.4)" }}>
+                <p className="font-goldeneye text-m-green text-3xl" style={{ textShadow: "0 0 20px rgba(0,255,65,0.4)" }}>
                   {agentStats.totalBuybacks}
                 </p>
                 <p className="font-mono text-[9px] text-m-dim tracking-widest mt-0.5">OPERATIONS</p>
