@@ -23,6 +23,7 @@ const config: Config = {
       fontFamily: {
         mono: ["'Courier New'", "Courier", "monospace"],
         sans: ["Inter", "system-ui", "sans-serif"],
+        bebas: ["var(--font-bebas)", "Impact", "sans-serif"],
       },
       animation: {
         "reticle":    "reticle 10s linear infinite",
