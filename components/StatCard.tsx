@@ -7,12 +7,16 @@ interface StatCardProps {
 
 export default function StatCard({ label, value, sub, highlight }: StatCardProps) {
   return (
-    <div className={`border p-5 ${highlight ? "border-white/20 bg-white/[0.03]" : "border-agent-border bg-agent-card"}`}>
-      <p className="font-mono text-[10px] text-agent-dim tracking-[0.25em] uppercase mb-3">{label}</p>
-      <p className={`font-mono text-2xl font-bold ${highlight ? "text-white" : "text-agent-light"}`}>
+    <div className={`p-5 border backdrop-blur-sm ${
+      highlight
+        ? "border-m-green/40 bg-m-green/5"
+        : "border-m-border bg-m-card/80"
+    }`}>
+      <p className="font-mono text-[10px] text-m-dim tracking-[0.25em] uppercase mb-3">{label}</p>
+      <p className={`font-mono text-2xl font-bold ${highlight ? "text-m-green" : "text-m-mid"}`}>
         {value}
       </p>
-      {sub && <p className="font-mono text-[11px] text-agent-dim mt-1">{sub}</p>}
+      {sub && <p className="font-mono text-[11px] text-m-dim mt-1">{sub}</p>}
     </div>
   );
 }
