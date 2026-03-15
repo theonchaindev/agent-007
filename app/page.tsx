@@ -1,7 +1,6 @@
 import Link from "next/link";
 import StatCard from "@/components/StatCard";
-import BuybackRow from "@/components/BuybackRow";
-import { mockBuybacks, agentStats } from "@/lib/data";
+import { agentStats } from "@/lib/data";
 
 export default function HomePage() {
   return (
@@ -24,18 +23,10 @@ export default function HomePage() {
             style={{ filter: "contrast(1.15) saturate(0.8)", objectPosition: "center 20%" }}
             draggable={false}
           />
-          {/* Blend white background into black — left to right */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{ background: "linear-gradient(to right, black 0%, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.4) 45%, transparent 70%)" }}
-          />
-          {/* Top edge */}
+          <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to right, black 0%, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0.4) 45%, transparent 70%)" }} />
           <div className="absolute top-0 left-0 right-0 h-48 pointer-events-none" style={{ background: "linear-gradient(to bottom, black 0%, rgba(0,0,0,0.6) 40%, transparent 100%)" }} />
-          {/* Bottom edge */}
           <div className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none" style={{ background: "linear-gradient(to top, black 0%, rgba(0,0,0,0.6) 40%, transparent 100%)" }} />
-          {/* Right edge */}
           <div className="absolute top-0 right-0 bottom-0 w-32 pointer-events-none" style={{ background: "linear-gradient(to left, black 0%, transparent 100%)" }} />
-          {/* Subtle green tint */}
           <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(0,255,65,0.04)" }} />
         </div>
 
@@ -79,25 +70,25 @@ export default function HomePage() {
               reducing supply, serving holders, 24/7.
             </p>
 
-            {/* Quick stats */}
+            {/* Stats — live zeros until wallet connected */}
             <div className="flex gap-8 mb-10">
               <div>
                 <p className="font-bebas text-m-green text-3xl" style={{ textShadow: "0 0 20px rgba(0,255,65,0.4)" }}>
-                  {agentStats.totalSolSpent.toFixed(1)}
+                  {agentStats.totalSolSpent.toFixed(2)}
                 </p>
                 <p className="font-mono text-[9px] text-m-dim tracking-widest mt-0.5">SOL DEPLOYED</p>
               </div>
               <div>
                 <p className="font-bebas text-m-green text-3xl" style={{ textShadow: "0 0 20px rgba(0,255,65,0.4)" }}>
-                  {(agentStats.totalTokensBurned / 1_000_000).toFixed(1)}M
+                  {agentStats.totalTokensBurned.toLocaleString()}
                 </p>
                 <p className="font-mono text-[9px] text-m-dim tracking-widest mt-0.5">TOKENS BURNED</p>
               </div>
               <div>
                 <p className="font-bebas text-m-green text-3xl" style={{ textShadow: "0 0 20px rgba(0,255,65,0.4)" }}>
-                  {agentStats.successRate}%
+                  {agentStats.totalBuybacks}
                 </p>
-                <p className="font-mono text-[9px] text-m-dim tracking-widest mt-0.5">SUCCESS RATE</p>
+                <p className="font-mono text-[9px] text-m-dim tracking-widest mt-0.5">OPERATIONS</p>
               </div>
             </div>
 
@@ -123,10 +114,10 @@ export default function HomePage() {
           <div className="flex-1 h-px bg-m-border" />
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-m-border">
-          <StatCard label="SOL Deployed"  value={`${agentStats.totalSolSpent.toFixed(2)}`}                    sub="total"          highlight />
-          <StatCard label="Tokens Burned" value={`${(agentStats.totalTokensBurned / 1_000_000).toFixed(2)}M`} sub="supply removed" />
-          <StatCard label="Operations"    value={String(agentStats.totalBuybacks)}                            sub="completed" />
-          <StatCard label="Success Rate"  value={`${agentStats.successRate}%`}                                sub="accuracy" />
+          <StatCard label="SOL Deployed"  value={agentStats.totalSolSpent.toFixed(2)}                                       sub="total"          highlight />
+          <StatCard label="Tokens Burned" value={agentStats.totalTokensBurned > 0 ? `${(agentStats.totalTokensBurned / 1_000_000).toFixed(2)}M` : "—"} sub="supply removed" />
+          <StatCard label="Operations"    value={String(agentStats.totalBuybacks)}                                          sub="completed" />
+          <StatCard label="Success Rate"  value={agentStats.successRate > 0 ? `${agentStats.successRate}%` : "—"}           sub="accuracy" />
         </div>
       </section>
 
@@ -144,9 +135,10 @@ export default function HomePage() {
               <span key={h} className="font-mono text-[9px] text-m-dim tracking-[0.2em]">{h}</span>
             ))}
           </div>
-          {mockBuybacks.slice(0, 5).map((b, i) => (
-            <BuybackRow key={b.id} buyback={b} index={i} />
-          ))}
+          <div className="py-16 text-center">
+            <p className="font-mono text-[11px] text-m-dim tracking-[0.3em]">AWAITING FIRST OPERATION</p>
+            <p className="font-mono text-[10px] text-m-dark mt-2 tracking-widest">WALLET NOT YET CONNECTED</p>
+          </div>
         </div>
       </section>
 
