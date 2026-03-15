@@ -20,8 +20,8 @@ export default function HomePage() {
           <img
             src="/bond.png"
             alt="Agent 007"
-            className="h-full w-full object-contain object-bottom select-none"
-            style={{ filter: "contrast(1.1) saturate(0.85)" }}
+            className="h-full w-full object-contain object-center select-none"
+            style={{ filter: "contrast(1.15) saturate(0.8)", objectPosition: "center 20%" }}
             draggable={false}
           />
           {/* Blend white background into black — left to right */}
