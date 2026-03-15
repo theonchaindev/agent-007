@@ -6,6 +6,10 @@ import MatrixRain from "@/components/MatrixRain";
 export const metadata: Metadata = {
   title: "AGENT 007 — Autonomous Buyback & Burn",
   description: "Autonomous AI agent buying and burning pump.fun dev fees. Licensed to accumulate.",
+  icons: {
+    icon: "/bond.png",
+    apple: "/bond.png",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
